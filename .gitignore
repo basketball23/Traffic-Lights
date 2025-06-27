@@ -2,7 +2,6 @@ datasets/
 # Ignore dataset files
 TrafficLights-Dataset.zip
 
-traffic_light_detection/
 
 .venv/
 # Ignore virtual environment directory

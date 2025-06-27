@@ -15,7 +15,7 @@ def train_yolo_model():
 
     # Load a pre-trained YOLOv8 model
 
-    model = YOLO(MODEL_SIZE)
+    model = YOLO("traffic_light_detection/lisa_finetune_v14/weights/last.pt")  # Load your pre-trained model
 
     # Ensure the data.yaml exists
     if not os.path.exists(DATA_YAML_PATH):
@@ -32,7 +32,8 @@ def train_yolo_model():
         project=PROJECT_NAME,
         name=EXPERIMENT_NAME,
         patience=50,  # Stop if no improvement for 50 epochs
-        device='mps'
+        device='mps',
+        val=False
     )
 
     print("Training complete! Results saved to:")
