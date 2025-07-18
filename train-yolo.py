@@ -6,7 +6,7 @@ DATA_YAML_PATH = './data.yaml' # Path to dataset.yaml file
 MODEL_SIZE = 'yolov8n.pt'    # YOLOv8 model size
 PROJECT_NAME = 'traffic_light_detection'
 EXPERIMENT_NAME = 'lisa_finetune_v1'
-EPOCHS = 100                 # Number of training epochs
+EPOCHS = 10                 # Number of training epochs
 IMG_SIZE = 640               # Image size
 BATCH_SIZE = 32           # Batch size
 

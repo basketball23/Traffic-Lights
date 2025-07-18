@@ -4,7 +4,7 @@ val: ../datasets/val/images      # or absolute path to your val images folder
 test: ../datasets/test/images    # or absolute path to your test images folder (optional for training)
 
 # number of classes
-nc: 3 # Assuming 3 classes: red_light, green_light, yellow_light
+nc: 1 # Assuming 3 classes: red_light, green_light, yellow_light
 
 # class names
-names: ['red_light', 'green_light', 'yellow_light']
+names: ['traffic_light']
