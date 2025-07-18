@@ -1,7 +1,9 @@
-datasets/
 # Ignore dataset files
-TrafficLights-Dataset.zip
+training/datasets/
+training/TrafficLights-Dataset.zip
 
-
-.venv/
 # Ignore virtual environment directory
+.venv/
+
+# Ignore video files of test runs
+runs/
