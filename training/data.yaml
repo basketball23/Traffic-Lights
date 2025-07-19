@@ -7,4 +7,4 @@ test: ../datasets/test/images    # or absolute path to your test images folder (
 nc: 1 # Assuming 3 classes: red_light, green_light, yellow_light
 
 # class names
-names: ['traffic_light']
+names: ['traffic-light']

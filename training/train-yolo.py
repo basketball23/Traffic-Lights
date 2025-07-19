@@ -4,8 +4,8 @@ from ultralytics import YOLO
 # Define paths
 DATA_YAML_PATH = './data.yaml' # Path to dataset.yaml file
 MODEL_SIZE = 'yolov8n.pt'    # YOLOv8 model size
-PROJECT_NAME = 'traffic_light_detection'
-EXPERIMENT_NAME = 'lisa_finetune_v1'
+PROJECT_NAME = 'traffic-light-detection'
+EXPERIMENT_NAME = 'lisa-finetune-v1'
 EPOCHS = 10                 # Number of training epochs
 IMG_SIZE = 640               # Image size
 BATCH_SIZE = 32           # Batch size
@@ -15,7 +15,7 @@ def train_yolo_model():
 
     # Load a pre-trained YOLOv8 model
 
-    model = YOLO("traffic_light_detection/lisa_finetune_v14/weights/last.pt")  # Load your pre-trained model
+    model = YOLO("traffic-light-detection/lisa-finetune-v1/weights/last.pt")  # Load your pre-trained model
 
     # Ensure the data.yaml exists
     if not os.path.exists(DATA_YAML_PATH):

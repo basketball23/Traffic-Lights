@@ -8,7 +8,7 @@ model = YOLO("best.pt")
 
 # Initialize pygame mixer for sound
 pygame.mixer.init()
-pygame.mixer.music.load("alert_sound.mp3")  # replace with your sound file
+pygame.mixer.music.load("alert-sound.mp3")  # replace with your sound file
 
 # Open webcam
 cap = cv2.VideoCapture(0)
