@@ -1,8 +1,8 @@
 from ultralytics import YOLO
 
-model = YOLO("training/traffic-light-detection/lisa-finetune-v1/weights/best.pt")
+model = YOLO("best.pt")
 
-results = model.predict("test-image-1.webp")
+results = model.predict("test.jpg")
 
 results[0].show()
-results[0].save("test-image-1-results.jpg")
+results[0].save("test-image-2-results.jpg")

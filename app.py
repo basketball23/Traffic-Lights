@@ -3,10 +3,10 @@ import numpy as np
 from ultralytics import YOLO
 import pygame
 
-# Initialize YOLOv8 with traffic light model
+# Initialize traffic light model
 model = YOLO("best.pt")
 
-# Initialize pygame mixer for sound
+# Initialize sound
 pygame.mixer.init()
 pygame.mixer.music.load("alert-sound.mp3")  # replace with your sound file
 
@@ -14,6 +14,14 @@ pygame.mixer.music.load("alert-sound.mp3")  # replace with your sound file
 cap = cv2.VideoCapture(0)
 
 def is_green_dominant(cropped_img):
+    """
+    Function to determine whether the colors in a bounding box are green dominant
+    Used to determine if a traffic light is green
+    
+    Input: Frame or bounding box to check
+
+    Ouput: Bool value, green dominant or not
+    """
     # Convert to HSV for better color segmentation
     hsv = cv2.cvtColor(cropped_img, cv2.COLOR_BGR2HSV)
     
@@ -29,8 +37,16 @@ def is_green_dominant(cropped_img):
     
     green_ratio = green_pixels / total_pixels
     
-    # Threshold: if more than 20% pixels are green, say it's green dominant
-    return green_ratio > 0.2
+    # Threshold: if more than 10% pixels are green say it's a green light
+    return green_ratio > 0.1
+
+
+"""
+Main app loop
+
+Checks each frame for a traffic light, and if it's green. If so, play a sound.
+"""
+green_detected = False
 
 while True:
     ret, frame = cap.read()
@@ -40,27 +56,38 @@ while True:
     # Run YOLO inference (suppress verbose for speed)
     results = model(frame, verbose=False)[0]
 
+    # To prevent multiple sounds playing per singular green light
+    green_found_this_frame = False
+
     # Iterate detected boxes and labels
     for box, cls in zip(results.boxes.xyxy, results.boxes.cls):
-        # Assuming class index for traffic light is known (e.g., 9 in COCO)
-        # Adjust this if you trained your own classes
-        if int(cls) == 9:
+
+        # Class index for traffic light (In this case 0, 9 for base yolo models)
+        if int(cls) == 0:
             x1, y1, x2, y2 = map(int, box)
 
             # Crop the detected traffic light area
             cropped = frame[y1:y2, x1:x2]
 
-            # Check if green is dominant in this crop
+            # Check if green is dominant and play sound
             if is_green_dominant(cropped):
-                # Draw box green and play sound
+
+                # Draw green box
                 cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 3)
-                if not pygame.mixer.music.get_busy():
+
+                if not pygame.mixer.music.get_busy() and not green_detected:
                     pygame.mixer.music.play()
+                    green_detected = True
             else:
-                # Draw box red if not green light
+                # Draw red box if not green light
                 cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 255), 3)
 
+    # Shows real-time view
     cv2.imshow("Traffic Light Detection", frame)
+
+    # Green light in frame reset
+    if not green_found_this_frame:
+        green_detected = False
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
